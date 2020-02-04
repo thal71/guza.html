@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>구자크루</title>
+    <style>
+    .canvasHolder{
+        position: relative;
+        height: 450px; width: 450px; 
+    }
+    .canvas{
+        position: absolute;
+        top: 0; left: 0;
+    }
+    </style>
+</head>
+<body style="background-image: url(img/guzanim.png)">
+  <div style="display: none">
+       <img id="effect" src="img/effect.png" width="450" height="450">
+       
+       <img id="bg01" src="img/bg01.png" width="450" height="450">
+       <img id="bg02" src="img/bg02.png" width="450" height="450">
+
+       <img id="hair01" src="img/hair01.png" width="450" height="450">
+       <img id="hair02" src="img/hair02.png" width="450" height="450">
+
+       <img id="eye01" src="img/eye01.png"  width="450" height="450">
+       <img id="eye02" src="img/eye02.png" width="450" height="450">
+       
+       <img id="body01" src="img/body01.png"  width="450" height="450">
+       <img id="body02" src="img/body02.png" width="450" height="450">
+       
+       <img id="face01" src="img/face01.png" width="450" height="450">
+       <img id="face02" src="img/face02.png" width="450" height="450">
+       
+       <img id="guzanim" src="img/guzanim2.png" width="450" height="450">
+       
+      </div>
+   <div class="canvasHolder">
+       <canvas class="canvas" id="guzaCanvas" width="450" height="450" style="border:1px solid #000000;z-index: 1"></canvas>
+        <canvas class="canvas" id="effectCanvas" width="450" height="450" style="border:1px solid #000000;"></canvas>
+        <canvas class="canvas" id="hairCanvas" width="450" height="450" style="border:1px solid #000000;z-index: -1"></canvas>
+        <canvas class="canvas" id="eyeCanvas" width="450" height="450" style="border:1px solid #000000;z-index: -2"></canvas>
+        <canvas class="canvas" id="bodyCanvas" width="450" height="450" style="border:1px solid #000000;z-index: -3"></canvas>
+        <canvas class="canvas" id="faceCanvas" width="450" height="450" style="border:1px solid #000000;z-index: -4"></canvas>
+        <canvas class="canvas" id="bgCanvas" width="450" height="450" style="border:1px solid #000000;z-index: -5"></canvas>
+        <div style="display: none">
+            <canvas class="canvas" id="Canvas0" width="450" height="450" style="border:1px solid red;"></canvas>
+        </div>
+    </div>
+    <br>    
+    <form style="background-color: white""width: 470px">
+    배경<br>
+      <input type="radio" name="bg" id="showbg1" onclick="if(this.checked){Canvasbg1()}">낮
+      <input type="radio" name="bg" id="showbg2" onclick="if(this.checked){Canvasbg2()}">밤<br>
+    머리카락<br>
+      <input type="radio" name="hair" id="showhair1" onclick="if(this.checked){Canvasclear5()}{hair1Function()}">화사❤
+      <input type="radio" name="hair" id="showhair2" onclick="if(this.checked){Canvasclear5()}{hair2Function()}">칙칙...<br>
+    상처 <br>
+      <input type="radio" name="face" id="face01" onclick="if(this.checked){Canvasclear3()}{face1Function()}">덜아픔
+      <input type="radio" name="face" id="face02" onclick="if(this.checked){Canvasclear3()}{face2Function()}">어우...<br>
+    눈 <br>
+      <input type="radio" name="eye" id="showeye01" onclick="if(this.checked){Canvasclear2()}{eye1Function()}">(◠‿◠)
+      <input type="radio" name="eye" id="showeye02" onclick="if(this.checked){Canvasclear2()}{eye2Function()}">(O‿O)<br>  
+     옷 <br>
+      <input type="radio" name="body" id="showbody01" onclick="if(this.checked){Canvasclear7()}{body1Function()}">1
+      <input type="radio" name="body" id="showbody02" onclick="if(this.checked){Canvasclear7()}{body2Function()}">2<br> 
+    그림자 <br>
+      <input type="radio" name="overlay" id="showoverlay" onclick="if(this.checked){Canvasclear4()}{overlayFunction()}">밤배경용으로 넣음
+      <input type="radio" name="overlay" id="hideoverlay" onclick="if(this.checked){Canvasclear4()}">낮에도뭐...<br><br>
+    구자티콘 <br>
+      <input type="radio" name="guza" id="showguza" onclick="if(this.checked){guzaFunction()}">구자티콘
+      <input type="radio" name="guza" id="hideguza" onclick="if(this.checked){Canvasclear6()}">빼기
+    </form>
+    <br>
+    <a id="download" download="download.png">
+    <button type="button" onclick="download()">❤다운로드❤</button>
+    </a>
+
+    <script>
+    var c = document.getElementById("bgCanvas");
+    var ctx = c.getContext("2d");
+    var c2 = document.getElementById("eyeCanvas");
+    var ctx2 = c2.getContext("2d");
+    var c3 = document.getElementById("faceCanvas");
+    var ctx3 = c3.getContext("2d");
+    var c4 = document.getElementById("effectCanvas");
+    var ctx4 = c4.getContext("2d");
+    var c5 = document.getElementById("hairCanvas");
+    var ctx5 = c5.getContext("2d");
+    var c6 = document.getElementById("guzaCanvas");
+    var ctx6 = c6.getContext("2d");
+    var c7 = document.getElementById("bodyCanvas");
+    var ctx7 = c7.getContext("2d");
+    
+    function Canvasclear2(){ctx2.clearRect(0,0,450, 450);}
+    function Canvasclear3(){ctx3.clearRect(0,0,450, 450);}
+    function Canvasclear4(){ctx4.clearRect(0,0,450, 450);}
+    function Canvasclear5(){ctx5.clearRect(0,0,450, 450);}  
+    function Canvasclear6(){ctx6.clearRect(0,0,450, 450);}
+    function Canvasclear7(){ctx7.clearRect(0,0,450, 450);} 
+
+        
+    function Canvasbg1(){
+        var img = document.getElementById("bg01");
+        ctx.drawImage(img,0,0);
+    }
+    function Canvasbg2(){
+        var img = document.getElementById("bg02");
+        ctx.drawImage(img,0,0);
+    }
+    function eye1Function(){
+            var img = document.getElementById("eye01");
+            ctx2.drawImage(img,0,0)
+        }
+    function eye2Function(){
+            var img = document.getElementById("eye02");
+            ctx2.drawImage(img,0,0)
+        }
+    function face1Function(){
+            var img = document.getElementById("face01");
+            ctx3.drawImage(img,0,0)
+        }
+    function face2Function(){
+            var img = document.getElementById("face02");
+            ctx3.drawImage(img,0,0)
+        }
+     function overlayFunction(){
+            var img = document.getElementById("effect");
+            ctx4.drawImage(img,0,0)
+        }
+    function hair1Function(){
+        var img = document.getElementById("hair01");
+        ctx5.drawImage(img,0,0)
+    }
+    function hair2Function(){
+        var img = document.getElementById("hair02");
+        ctx5.drawImage(img,0,0)
+    }
+    function guzaFunction(){
+        var img = document.getElementById("guzanim");
+        ctx6.drawImage(img,0,0)
+    }
+    function body1Function(){
+        var img = document.getElementById("body01");
+        ctx7.drawImage(img,0,0)
+    }
+        function body2Function(){
+        var img = document.getElementById("body02");
+        ctx7.drawImage(img,0,0)
+    }
+        
+        
+    function download(){
+        
+        var canvas1 = document.getElementById('effectCanvas');
+        var canvas2 = document.getElementById('hairCanvas');
+        var canvas3 = document.getElementById('eyeCanvas');
+        var canvas4 = document.getElementById('faceCanvas');
+        var canvas5 = document.getElementById('bgCanvas');
+        var canvas6 = document.getElementById('guzaCanvas');
+        var canvas7 = document.getElementById('bodyCanvas');
+        
+        var c0 = document.getElementById("Canvas0");
+        var ctx0 = c0.getContext("2d");
+        ctx0.drawImage(canvas5,0,0);
+        ctx0.drawImage(canvas4,0,0);
+        ctx0.drawImage(canvas7,0,0);
+        ctx0.drawImage(canvas3,0,0);
+        ctx0.drawImage(canvas2,0,0);
+        ctx0.drawImage(canvas1,0,0);
+        ctx0.drawImage(canvas6,0,0);
+
+        var download = document.getElementById('download');
+        var image = document.getElementById("Canvas0").toDataURL("image/png")
+    .replace("image/png", "image/octet-stream");
+download.setAttribute("href", image);
+    }
+        
+    
+    </script>
+</body>
+</html>
+
